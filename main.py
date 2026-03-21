@@ -125,7 +125,16 @@ async def message_handler(message: Message):
 
 
 async def main():
-    pool = await aiomysql.create_pool(host="localhost", user="root", password="1234", db="swag", port=3306, autocommit=True, minsize=1, maxsize=5)
+  async def main():
+    import os
+    pool = await aiomysql.create_pool(
+        host=os.getenv("MYSQLHOST"),
+        user=os.getenv("MYSQLUSER"),
+        password=os.getenv("MYSQLPASSWORD"),
+        db=os.getenv("MYSQLDATABASE"),
+        port=int(os.getenv("MYSQLPORT", 3306)),
+        autocommit=True, minsize=1, maxsize=5
+    )
     print("бот запущен")
     await dp.start_polling(bot, swag=pool)
 
