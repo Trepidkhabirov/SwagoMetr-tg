@@ -1,4 +1,6 @@
 import aiogram
+import sys
+sys.stdout.reconfigure(line_buffering=True)
 from aiogram import Dispatcher, Bot, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton, \
@@ -135,7 +137,7 @@ async def main():
         port=int(os.getenv("MYSQLPORT", 3306)),
         autocommit=True, minsize=1, maxsize=5
     )
-    print("бот запущен")
+   print("бот запущен", flush=True)
     await dp.start_polling(bot, swag=pool)
 
 
