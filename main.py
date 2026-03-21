@@ -31,12 +31,12 @@ async def test_handler(message: Message):
 async def swag_callback(callback: CallbackQuery, swag):
     user_id = callback.from_user.id
     username = callback.from_user.username or callback.from_user.full_name
-    chat_id = message.chat.id
+    chat_id = callback.message.chat.id
     rand = randint(-10, 10)
     pool = swag
     async with pool.acquire() as conn:
         async with conn.cursor() as cur:
-            await cur.execute(f"SELECT * FROM swagtable where id_user={user_id}")
+            await cur.execute(f"SELECT * FROM swagtable where id_user={user_id} and chat_id={chat_id}")
             row = await cur.fetchone()
             if row is not None:
                 last_used = row[3]
@@ -68,10 +68,11 @@ async def swag_handler(message: Message, swag):
     user_id = message.from_user.id
     username = message.from_user.username or message.from_user.full_name
     rand = randint(-10, 10)
+    chat_id = message.chat.id
     pool = swag
     async with pool.acquire() as conn:
         async with conn.cursor() as cur:
-            await cur.execute(f"SELECT * FROM swagtable where id_user={user_id}")
+            await cur.execute(f"SELECT * FROM swagtable where id_user={user_id} and chat_id = {chat_id}")
             row = await cur.fetchone()
             if row is not None:
                 last_used = row[3]
