@@ -6,8 +6,8 @@ from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, InlineKe
 from random import randint, choice
 import aiomysql
 from datetime import datetime, timedelta
-
-TokenApi = '8459518598:AAENhrVn8sUrcShd_1lFbV3_Sb3cJJ9H-ks'
+import os
+TokenApi = os.getenv("TOKEN_API")
 
 bot = Bot(token=TokenApi)
 dp = Dispatcher()
