@@ -31,6 +31,7 @@ async def test_handler(message: Message):
 async def swag_callback(callback: CallbackQuery, swag):
     user_id = callback.from_user.id
     username = callback.from_user.username or callback.from_user.full_name
+    chat_id = message.chat.id
     rand = randint(-10, 10)
     pool = swag
     async with pool.acquire() as conn:
@@ -46,11 +47,11 @@ async def swag_callback(callback: CallbackQuery, swag):
                     await callback.answer()
                     return
             if row is None:
-                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used) values ({user_id}, '{username}', {rand}, NOW())")
+                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW()), {chat_id}")
                 current = rand
             else:
                 current = row[2] + rand
-                await cur.execute(f"update swagtable set swag_count={current}, last_used=NOW() where id_user={user_id}")
+                await cur.execute(f"update swagtable set swag_count={current}, last_used=NOW() where id_user={user_id} and chat_id = {chat_id}")
             text = f"{username}, "
             if rand > 0:
                 text += choice([f"🔥 Жестко! +{rand} к свагу", f"📈 Ты на подъёме: +{rand}", f"💪 Сваг прокачался на {rand}", f"😱 Не, ну это прайм! +{rand} к свагу"])
@@ -80,11 +81,11 @@ async def swag_handler(message: Message, swag):
                     await message.answer(f"{username}, ⏳ Подожди ещё {minutes} минут\n Текущий сваг: {row[2]}")
                     return
             if row is None:
-                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used) values ({user_id}, '{username}', {rand}, NOW())")
+                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW()), {chat_id}")
                 current = rand
             else:
                 current = row[2] + rand
-                await cur.execute(f"update swagtable set swag_count={current}, last_used=NOW() where id_user={user_id}")
+                await cur.execute(f"update swagtable set swag_count={current}, last_used=NOW() where id_user={user_id} and chat_id = {chat_id}")
             text = f"{username}, "
             if rand > 0:
                 text += choice([f"🔥 Жестко! +{rand} к свагу", f"📈 Ты на подъёме: +{rand}", f"💪 Сваг прокачался на {rand}", f"😱 Не, ну это прайм! +{rand} к свагу"])
