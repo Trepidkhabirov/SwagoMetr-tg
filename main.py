@@ -47,7 +47,7 @@ async def swag_callback(callback: CallbackQuery, swag):
                     await callback.answer()
                     return
             if row is None:
-                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW(), {chat_id}")
+                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW(), {chat_id})")
                 current = rand
             else:
                 current = row[2] + rand
@@ -82,7 +82,7 @@ async def swag_handler(message: Message, swag):
                     await message.answer(f"{username}, ⏳ Подожди ещё {minutes} минут\n Текущий сваг: {row[2]}")
                     return
             if row is None:
-                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW(), {chat_id}")
+                await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW(), {chat_id})")
                 current = rand
             else:
                 current = row[2] + rand
