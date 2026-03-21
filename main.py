@@ -30,7 +30,7 @@ async def test_handler(message: Message):
 @dp.callback_query(F.data == "swag")
 async def swag_callback(callback: CallbackQuery, swag):
     user_id = callback.from_user.id
-    username = callback.from_user.username or callback.from_user.full_name
+    username = callback.message.from_user.full_name
     chat_id = callback.message.chat.id
     rand = randint(-10, 10)
     pool = swag
@@ -66,7 +66,7 @@ async def swag_callback(callback: CallbackQuery, swag):
 @dp.message(Command("swag"))
 async def swag_handler(message: Message, swag):
     user_id = message.from_user.id
-    username = message.from_user.username or message.from_user.full_name
+    username = message.from_user.full_name
     rand = randint(-10, 10)
     chat_id = message.chat.id
     pool = swag
