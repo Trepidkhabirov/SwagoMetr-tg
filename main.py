@@ -1,3 +1,5 @@
+from asyncio import start_server
+
 import aiogram
 import sys
 sys.stdout.reconfigure(line_buffering=True)
@@ -96,6 +98,19 @@ async def swag_handler(message: Message, swag):
                 text = f"🥶 Сваг без изменений.."
             text += f"\nТекущий сваг: {current}"
             await message.answer(text)
+
+from stats import stats_handler
+# /stats
+@dp.message(Command("stats"))
+async def stats_handler(message: Message, swag):
+    await stats_handler(message, swag)
+
+from statstext import stats_handler
+# /top
+@dp.message(Command("top"))
+async def top_handler(message: Message, swag):
+    await stats_handler(message, swag)
+
 
 @dp.message()
 async def message_handler(message: Message):
