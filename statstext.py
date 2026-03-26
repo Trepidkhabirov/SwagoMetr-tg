@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import io
 
-async def stats_handler(message: Message, swag):
+async def stats_text_handler(message: Message, swag):
     chat_id = message.chat.id
     async with swag.acquire() as conn:
         async with conn.cursor() as cur:

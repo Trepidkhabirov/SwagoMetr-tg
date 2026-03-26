@@ -105,11 +105,11 @@ from stats import stats_handler
 async def stats_handler(message: Message, swag):
     await stats_handler(message, swag)
 
-from statstext import stats_handler
+from statstext import stats_text_handler
 # /top
 @dp.message(Command("top"))
 async def top_handler(message: Message, swag):
-    await stats_handler(message, swag)
+    await stats_text_handler(message, swag)
 
 
 @dp.message()
