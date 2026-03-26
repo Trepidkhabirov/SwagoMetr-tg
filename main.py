@@ -99,11 +99,11 @@ async def swag_handler(message: Message, swag):
             text += f"\nТекущий сваг: {current}"
             await message.answer(text)
 
-from stats import stats_handler
+from stats import render_handler
 # /stats
 @dp.message(Command("stats"))
 async def stats_handler(message: Message, swag):
-    await stats_handler(message, swag)
+    await render_handler(message, swag)
 
 from statstext import stats_text_handler
 # /top

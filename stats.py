@@ -12,7 +12,7 @@ import io
 
 
 # /stats
-async def stats_handler(message: Message, swag):
+async def render_handler(message: Message, swag):
     chat_id = message.chat.id
     pool = swag
     async with pool.acquire() as conn:
