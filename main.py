@@ -32,7 +32,7 @@ async def test_handler(message: Message):
 @dp.callback_query(F.data == "swag")
 async def swag_callback(callback: CallbackQuery, swag):
     user_id = callback.from_user.id
-    username = callback.message.from_user.full_name
+    username = callback.from_user.full_name
     chat_id = callback.message.chat.id
     rand = randint(-10, 10)
     pool = swag
@@ -79,8 +79,8 @@ async def swag_callback(callback: CallbackQuery, swag):
                 f"🤑 Сваг так прокачался, что даже налоговая охуела. +{rand}",
                 f"🔝 Ты щас выглядишь как будто сосал у удачи. +{rand}",
                 f"⚡ +{rand} к свагу. Мамка твоя уже гордится (наконец-то)",
-                f"Сваг взлетел, как ракета в ночи, +{rand} — теперь ты бог!"
-                f"Бля, какой вайб, какой мощный толчок, +{rand} сваги — ты теперь на вершине!"
+                f"Сваг взлетел, как ракета в ночи, +{rand} — теперь ты бог!",
+                f"Бля, какой вайб, какой мощный толчок, +{rand} сваги — ты теперь на вершине!",
                 f"Ты разъебал систему на полную катушку, +{rand} — теперь ты в прайме!"
             ]
             negative = [
@@ -118,6 +118,7 @@ async def swag_callback(callback: CallbackQuery, swag):
                 text += choice(zero)
             text += f"\nТекущий сваг: {current}"
             await callback.message.answer(text)
+            await callback.answer()
 
 @dp.message(Command("swag"))
 async def swag_handler(message: Message, swag):
@@ -170,8 +171,8 @@ async def swag_handler(message: Message, swag):
                 f"🤑 Сваг так прокачался, что даже налоговая охуела. +{rand}",
                 f"🔝 Ты щас выглядишь как будто сосал у удачи. +{rand}",
                 f"⚡ +{rand} к свагу. Мамка твоя уже гордится (наконец-то)",
-                f"Сваг взлетел, как ракета в ночи, +{rand} — теперь ты бог!"
-                f"Бля, какой вайб, какой мощный толчок, +{rand} сваги — ты теперь на вершине!"
+                f"Сваг взлетел, как ракета в ночи, +{rand} — теперь ты бог!",
+                f"Бля, какой вайб, какой мощный толчок, +{rand} сваги — ты теперь на вершине!",
                 f"Ты разъебал систему на полную катушку, +{rand} — теперь ты в прайме!"
             ]
             negative = [
