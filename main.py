@@ -45,8 +45,22 @@ async def swag_callback(callback: CallbackQuery, swag):
                 if last_used and datetime.now() - last_used < timedelta(hours=1):
                     remaining = timedelta(hours=1) - (datetime.now() - last_used)
                     minutes = int(remaining.total_seconds() // 60)
-                    await callback.message.answer(f"{username}, ⏳ Подожди ещё {minutes} минут\n Текущий сваг: {row[2]}")
-                    await callback.answer()
+                    cooldown_texts = [
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, не дёргайся, лох",
+                        f"{username}, ⏳ Ещё {minutes} минут подожди, сваг не резиновый, брат",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут\nТвой сваг сейчас отсыпается после тебя, усталый",
+                        f"{username}, ⏳ Ещё {minutes} минут терпи, не ссы\nСваг в перерыве, а ты в очереди, как всегда",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, долбоёб\nДаже рандом устал от твоей жадности",
+                        f"{username}, ⏳ Осталось {minutes} минут кулдауна\nСваг сказал: «этот мудак опять пришёл слишком рано»",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, не торопись\nТвой сваг сейчас в отпуске от такого юзера как ты",
+                        f"{username}, ⏳ Ещё {minutes} минут сиди тихо\nДаже птички ржут, как быстро ты вернулся",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, потерпи, герой\nСваг в спячке, потому что ты его уже заебал",
+                        f"{username}, ⏳ Осталось {minutes} минут\nТы пришёл слишком рано!"
+                    ]
+                    text = choice(cooldown_texts)
+                    text += f"\nТекущий сваг: {row[2]}"
+
+                    await callback.message.answer(f"{text}")
                     return
             if row is None:
                 await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW(), {chat_id})")
@@ -104,7 +118,6 @@ async def swag_callback(callback: CallbackQuery, swag):
                 text += choice(zero)
             text += f"\nТекущий сваг: {current}"
             await callback.message.answer(text)
-            await callback.answer()
 
 @dp.message(Command("swag"))
 async def swag_handler(message: Message, swag):
@@ -122,7 +135,22 @@ async def swag_handler(message: Message, swag):
                 if last_used and datetime.now() - last_used < timedelta(hours=1):
                     remaining = timedelta(hours=1) - (datetime.now() - last_used)
                     minutes = int(remaining.total_seconds() // 60)
-                    await message.answer(f"{username}, ⏳ Подожди ещё {minutes} минут\n Текущий сваг: {row[2]}")
+                    cooldown_texts = [
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, не дёргайся, лох",
+                        f"{username}, ⏳ Ещё {minutes} минут подожди, сваг не резиновый, брат",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут\nТвой сваг сейчас отсыпается после тебя, усталый",
+                        f"{username}, ⏳ Ещё {minutes} минут терпи, не ссы\nСваг в перерыве, а ты в очереди, как всегда",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, долбоёб\nДаже рандом устал от твоей жадности",
+                        f"{username}, ⏳ Осталось {minutes} минут кулдауна\nСваг сказал: «этот мудак опять пришёл слишком рано»",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, не торопись\nТвой сваг сейчас в отпуске от такого юзера как ты",
+                        f"{username}, ⏳ Ещё {minutes} минут сиди тихо\nДаже птички ржут, как быстро ты вернулся",
+                        f"{username}, ⏳ Подожди ещё {minutes} минут, потерпи, герой\nСваг в спячке, потому что ты его уже заебал",
+                        f"{username}, ⏳ Осталось {minutes} минут\nТы пришёл слишком рано!"
+                    ]
+                    text = choice(cooldown_texts)
+                    text += f"\nТекущий сваг: {row[2]}"
+                    
+                    await message.answer(f"{text}")
                     return
             if row is None:
                 await cur.execute(f"insert into swagtable (id_user, username, swag_count, last_used, chat_id) values ({user_id}, '{username}', {rand}, NOW(), {chat_id})")
