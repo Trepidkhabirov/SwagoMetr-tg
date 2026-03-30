@@ -87,9 +87,6 @@ async def swag_callback(callback: CallbackQuery, swag):
                 current = rand
             else:
                 current = row[2] + rand
-                while current < 0:
-                    rand = randint(-10, 10)
-                    current = row[2] + rand
                 await cur.execute(f"update swagtable set swag_count={current}, last_used=NOW() where id_user={user_id} and chat_id = {chat_id}")
             positive = [
                 f"🔥 БЛЯТЬ, КАКОЙ ПРАЙМ! +{rand} к свагу, легенда",
@@ -261,9 +258,6 @@ async def swag_handler(message: Message, swag):
 
             else:
                 current = row[2] + rand
-                while current < 0:
-                    rand = randint(-10, 10)
-                    current = row[2] + rand
                 await cur.execute(f"update swagtable set swag_count={current}, last_used=NOW() where id_user={user_id} and chat_id = {chat_id}")
             text = f"{username}, "
             positive = [
