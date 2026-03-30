@@ -1,5 +1,3 @@
-from asyncio import start_server
-
 import aiogram
 import sys
 sys.stdout.reconfigure(line_buffering=True)
